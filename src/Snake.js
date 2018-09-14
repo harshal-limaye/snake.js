@@ -3,11 +3,14 @@ export default class Snake {
     height = 20;
     bodyColor = 'black';
     headColor = 'green';
-    blocks = [
-        {x: 220, y: 200},
-        {x: 210, y: 200},
-        {x: 200, y: 200}
-    ];
+    blocks = [ {x: 220, y: 200}, {x: 210, y: 200}, {x: 200, y: 200} ];
+    turnHead = {
+        0: (val) => val - 5,
+        1: (val) => val - 5,
+        2: (val) => val + 5,
+        3: (val) => val + 5
+    }
+    axis = { 0: 'x', 1: 'y', 2: 'x', 3: 'y' }
 
     draw = (context) => this.blocks.forEach((block, i) => this.drawSnake(context, block, i));
 
@@ -22,34 +25,11 @@ export default class Snake {
 
     changePosition = (direction) => {
         for(let i = this.blocks.length - 1; i >= 0; i--) {
-            if (direction === 0) {
-                if (i === 0) {
-                    this.blocks[i].x = this.blocks[i].x - 5;
-                } else {
-                    this.blocks[i].x = this.blocks[i - 1].x;
-                    this.blocks[i].y = this.blocks[i - 1].y;
-                }
-            }  else if (direction === 1) {
-                if (i === 0) {
-                    this.blocks[i].y = this.blocks[i].y - 5;
-                } else {
-                    this.blocks[i].x = this.blocks[i - 1].x;
-                    this.blocks[i].y = this.blocks[i - 1].y;
-                }
-            }  else if (direction === 2) {
-                if (i === 0) {
-                    this.blocks[i].x = this.blocks[i].x + 5;
-                } else {
-                    this.blocks[i].x = this.blocks[i - 1].x;
-                    this.blocks[i].y = this.blocks[i - 1].y;
-                }
-            }  else if (direction === 3) {
-                if (i === 0) {
-                    this.blocks[i].y = this.blocks[i].y + 5;
-                } else {
-                    this.blocks[i].x = this.blocks[i - 1].x;
-                    this.blocks[i].y = this.blocks[i - 1].y;
-                }
+            if (i === 0) {
+                this.blocks[i][this.axis[direction]] = this.turnHead[direction](this.blocks[i][this.axis[direction]]);
+            } else {
+                this.blocks[i].x = this.blocks[i - 1].x;
+                this.blocks[i].y = this.blocks[i - 1].y;
             }
         }
     }
