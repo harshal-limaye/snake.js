@@ -20,6 +20,29 @@ class App {
         this.captureKeyEvents();
     }
 
+    captureKeyEvents = () => {
+        document.onkeydown = (event) => {
+            if (this.isValidDirection(event.keyCode) && (this.directions[event.keyCode] || this.directions[event.keyCode] === 0)) {
+                this.direction = this.directions[event.keyCode];   
+            }
+        }
+    }
+
+    isHunting = () => {
+        if (this.snake.bite(this.prey)) {
+            this.prey.generate();
+            this.snake.grow(this.direction);
+            this.score++;
+        }
+    }
+
+    gameOver = () => {
+        if (this.snake.isGameOver()) {
+            clearInterval(this.interval);
+            this.context.fillText('Game over!', 200, 250);
+        }
+    }
+
     isValidDirection = (keyCode) => {
         if (this.directions[keyCode] === this.direction) {
             return false;
@@ -36,40 +59,25 @@ class App {
         return true;
     }
 
-    captureKeyEvents = () => {
-        document.onkeydown = (event) => {
-            if (this.isValidDirection(event.keyCode) && (this.directions[event.keyCode] || this.directions[event.keyCode] === 0)) {
-                this.direction = this.directions[event.keyCode];   
-            }
-        }
-    }
-
     initCanvas = () => {
         this.canvas = document.getElementById('game');
         this.context = this.canvas.getContext('2d');
         this.context.font = '24px Calibri';
     }
 
-    start = () => {
-        this.snake = new Snake();
-        this.prey = new Prey();
-        this.interval = setInterval(this.moveSnake, 20);
-    }
-
     moveSnake = () => {
-        if (this.snake.bite(this.prey)) {
-            this.prey.generate();
-            this.snake.grow(this.direction);
-            this.score++;
-        }
+        this.isHunting();
         this.context.clearRect(0, 0, this.width, this.height);
         this.context.fillText('Score : ' + this.score, 400, 475);
         this.prey.draw(this.context);
         this.snake.move(this.direction, this.context, this.prey);
-        if (this.snake.isGameOver()) {
-            clearInterval(this.interval);
-            this.context.fillText('Game over!', 200, 250);
-        }
+        this.gameOver();
+    }
+
+    start = () => {
+        this.snake = new Snake();
+        this.prey = new Prey();
+        this.interval = setInterval(this.moveSnake, 20);
     }
 }
 
