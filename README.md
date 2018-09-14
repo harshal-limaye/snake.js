@@ -1,5 +1,7 @@
 # Snake.js
 
+![Snake](https://raw.githubusercontent.com/harshal-limaye/snake.js/master/images/snake.png)
+
 Snake.js is a dead simple JavaScript based snake game built on top of Babel and Webpack.
 
 To setup the game follow the steps given below:
