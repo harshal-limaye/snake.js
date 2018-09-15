@@ -1,7 +1,5 @@
 # Snake.js
 
-![Snake](https://raw.githubusercontent.com/harshal-limaye/snake.js/master/images/snake.png)
-
 Snake.js is a dead simple JavaScript based snake game built on top of Babel and Webpack.
 
 To setup the game follow the steps given below:
@@ -12,4 +10,6 @@ To setup the game follow the steps given below:
 
 To run the game in production mode run ``` npm start ``` in the console.
 
-To generate a **build** run ```npm run build``` command.
+To generate a build run ```npm run build``` command.
+
+[Click here](http://harshal.co/snake) to view the demo.
