@@ -1,4 +1,5 @@
 export default class Snake {
+
     width = 20;
     height = 20;
     bodyColor = 'black';
@@ -12,6 +13,8 @@ export default class Snake {
     }
     axis = { 0: 'x', 1: 'y', 2: 'x', 3: 'y' }
 
+    bite = (prey) => this.isCrashed(this.blocks[0], prey);
+
     draw = (context) => this.blocks.forEach((block, i) => this.drawSnake(context, block, i));
 
     drawSnake = (context, block, i ) => {
@@ -20,8 +23,6 @@ export default class Snake {
         context.fillRect(block.x, block.y, this.width, this.height);
         context.restore();
     }
-
-    bite = (prey) => this.isCrashed(this.blocks[0], prey);
 
     changePosition = (direction) => {
         for(let i = this.blocks.length - 1; i >= 0; i--) {

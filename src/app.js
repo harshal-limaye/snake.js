@@ -2,6 +2,7 @@ import Prey from './Prey';
 import Snake from './Snake';
 
 class App {
+
     ate = true;
     canvas;
     context;
@@ -28,18 +29,17 @@ class App {
         }
     }
 
+    initCanvas = () => {
+        this.canvas = document.getElementById('game');
+        this.context = this.canvas.getContext('2d');
+        this.context.font = '24px Calibri';
+    }
+
     isHunting = () => {
         if (this.snake.bite(this.prey)) {
             this.prey.generate();
             this.snake.grow(this.direction);
             this.score++;
-        }
-    }
-
-    gameOver = () => {
-        if (this.snake.isGameOver()) {
-            clearInterval(this.interval);
-            this.context.fillText('Game over!', 200, 250);
         }
     }
 
@@ -59,10 +59,11 @@ class App {
         return true;
     }
 
-    initCanvas = () => {
-        this.canvas = document.getElementById('game');
-        this.context = this.canvas.getContext('2d');
-        this.context.font = '24px Calibri';
+    gameOver = () => {
+        if (this.snake.isGameOver()) {
+            clearInterval(this.interval);
+            this.context.fillText('Game over!', 200, 250);
+        }
     }
 
     moveSnake = () => {
